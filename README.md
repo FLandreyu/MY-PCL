@@ -15,6 +15,23 @@
 
 <br/>
 
+### 正版登录说明（第三方修复版）
+
+本仓库与官方源码一样，**不包含微软 OAuth 客户端 ID**（官方构建由 CI 注入密钥）。因此自行编译的版本点「正版登录」会报 `AADSTS900144: client_id` 缺失。要让它工作，需要你自备一个已获 **Mojang 白名单**批准的 Entra 应用：
+
+1. 在 [Microsoft Entra 管理中心](https://entra.microsoft.com) 注册应用：受支持的账户类型选「任何组织目录中的账户和个人 Microsoft 帐户」，并在「身份验证」中开启「允许公共客户端流」。
+2. 复制「应用程序(客户端) ID」，启动前设置环境变量 `PCL_MS_CLIENT_ID=<你的 client id>`（或在 `ModSecret.vb` 中填写默认值后重新编译）。
+3. 通过 [Minecraft 官方 AppID 表单](https://help.minecraft.net/hc/en-us/articles/16254801392141) 提交 client id 申请白名单——**审核通过前登录无法完成**。
+4. 审批通过后即可正常登录。
+
+登录进度到 55%（第 4/6 步）并提示 `403 Invalid app registration` 表示账号授权全部成功，仅应用未获 Mojang 批准；这与网络、IP、VPN 无关。
+
+> 不想折腾的话，可以直接用官方 PCL 登录并启动游戏，再用本修复版下载版本与整合包（两者数据目录互不干扰）。
+
+### 相关文档
+- [隐私政策](PRIVACY.md)
+- [使用条款](TERMS.md)
+
 ### 相关资源
 - [PCL 下载](https://meloong.com/pcl)：下载可免费使用的正式版 PCL！
 - [PCL 功能投票](https://github.com/Meloong-Git/PCL/discussions/2)：来参加投票吧，开发者会优先处理票数较高的项目！

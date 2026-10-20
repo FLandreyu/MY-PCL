@@ -1027,6 +1027,9 @@ Retry:
                 Throw New Exception("$登录尝试太过频繁，请等待几分钟后再试！")
             ElseIf ex.StatusCode = HttpStatusCode.Forbidden Then
                 Logger.Warn(ex, "微软登录第 4 步汇报 403")
+                If ex.Response?.Contains("Invalid app registration") Then
+                    Throw New Exception("$当前使用的登录应用未通过 Mojang 白名单审核。" & vbCrLf & "你的账号授权已经成功，但 Mojang 拒绝了这个应用，与网络、IP、VPN 无关。" & vbCrLf & "请等应用通过审核后再登录，或改用官方启动器登录。")
+                End If
                 Throw New Exception("$当前 IP 的登录尝试异常。" & vbCrLf & "如果你使用了 VPN 或加速器，请把它们关掉或更换节点后再试！")
             ElseIf ex.StatusCode = HttpStatusCode.ServiceUnavailable Then
                 Logger.Warn(ex, "微软登录第 4 步汇报 503")
