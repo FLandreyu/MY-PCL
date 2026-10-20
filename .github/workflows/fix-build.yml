@@ -87,8 +87,10 @@ jobs:
           ``PCL-$version-fix-win.zip`` —— 内含 exe、``LICENCE``、``修复说明.txt``
 
           ### 注意
-          - 未注入官方 CI 密钥：正版登录需自备已获 Mojang 白名单批准的 Entra 应用，详见 README
+          - 未注入官方 CI 密钥：正版登录需自备已获 Mojang 白名单批准的 Entra 应用（环境变量 ``PCL_MS_CLIENT_ID``），详见 README
+          - 未注入 CurseForge API Key：CurseForge 搜索不可用
           - exe 未签名，Windows SmartScreen 可能提示
+          - 隐私政策：[PRIVACY.md](https://github.com/$env:GITHUB_REPOSITORY/blob/main/PRIVACY.md)；使用条款：[TERMS.md](https://github.com/$env:GITHUB_REPOSITORY/blob/main/TERMS.md)
           "@
           [IO.File]::WriteAllText("dist\RELEASE.md", $release, (New-Object Text.UTF8Encoding $false))
 
