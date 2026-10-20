@@ -120,7 +120,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          name: PCL ${{ env.VERSION }} 第三方修复版（恢复 MC 下载）
+          name: PCL ${{ env.VERSION }} 修复版 · 重新开启 Minecraft 下载
           body_path: dist/RELEASE.md
           files: dist/*.zip
           draft: false
