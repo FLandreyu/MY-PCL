@@ -7,6 +7,9 @@
 [![下载量](https://img.shields.io/github/downloads/FLandreyu/MY-PCL/total?label=%E4%B8%8B%E8%BD%BD&color=3FB950)](https://github.com/FLandreyu/MY-PCL/releases)
 [![使用条款](https://img.shields.io/badge/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE-TERMS.md-8250df)](TERMS.md)
 [![隐私政策](https://img.shields.io/badge/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96-PRIVACY.md-8250df)](PRIVACY.md)
+[![English](https://img.shields.io/badge/English-README.en.md-8250df)](README.en.md)
+
+![PCL 修复版的下载页：可以正常浏览和安装 Minecraft 版本、模组加载器与整合包](docs/preview.png)
 
 ## 下载与使用
 

@@ -74,23 +74,37 @@ jobs:
             -DestinationPath "dist\PCL-$version-fix-win.zip" -CompressionLevel Optimal
 
           $release = @"
-          ## PCL $version 第三方修复版（恢复 MC 下载）
+          ## 下载即用：PCL $version 修复版（已重新开启下载）
 
-          基于 [Meloong-Git/PCL](https://github.com/Meloong-Git/PCL) 的 $version 源码重新编译，**非官方发布**。
+          **官方 PCL 2.99 关闭了 Minecraft 下载，这个版本把它打开了。** 解压 → 双击 → 进「下载」页，就能装游戏版本、Forge / Fabric / NeoForge 和整合包。
 
-          ### 改动
-          - ``RestrictMcDownload`` 改为 ``False``，恢复 Minecraft 版本列表、整合包与安装页下载入口
-          - 移除更新日志中「删除 MC 下载功能」的提示
-          - 正版登录 403 时提示「应用未通过 Mojang 白名单审核」，不再误报为 IP 异常
+          ![下载页](https://github.com/$env:GITHUB_REPOSITORY/raw/main/docs/preview.png)
 
-          ### 下载
-          ``PCL-$version-fix-win.zip`` —— 内含 exe、``LICENCE``、``修复说明.txt``
+          ### 怎么用
+          1. 下载本页的 `PCL-$version-fix-win.zip`
+          2. 解压到任意目录（免安装）
+          3. 双击 `Plain Craft Launcher 2.exe`，进入「下载」页
 
-          ### 注意
-          - 未注入官方 CI 密钥：正版登录需自备已获 Mojang 白名单批准的 Entra 应用（环境变量 ``PCL_MS_CLIENT_ID``），详见 README
-          - 未注入 CurseForge API Key：CurseForge 搜索不可用
-          - exe 未签名，Windows SmartScreen 可能提示
-          - 隐私政策：[PRIVACY.md](https://github.com/$env:GITHUB_REPOSITORY/blob/main/PRIVACY.md)；使用条款：[TERMS.md](https://github.com/$env:GITHUB_REPOSITORY/blob/main/TERMS.md)
+          首次运行若提示「Windows 已保护你的电脑」，点「更多信息 → 仍要运行」：程序没有代码签名。
+
+          ### 先说清楚：哪些能用、哪些不能
+          | 功能 | 状态 |
+          | --- | --- |
+          | 下载原版 / 快照 / 远古版本 | ✅ |
+          | 安装 Forge、NeoForge、Fabric、LiteLoader、OptiFine | ✅ |
+          | 安装整合包（.zip / .mrpack） | ✅ |
+          | 修改已安装版本组件 | ✅ |
+          | 正版（微软）登录 | ⚠️ 需自备已获 Mojang 白名单批准的 Entra 应用 |
+          | CurseForge 在线搜索 | ❌ 本构建无 API Key（Modrinth 正常） |
+          | 自动更新 | ❌ 开源版不含更新模块 |
+
+          ### 正版登录怎么办
+          本版不含微软 OAuth 客户端 ID，需要自备已获 Mojang 白名单批准的 Entra 应用，再通过 `PCL_MS_CLIENT_ID` 或自行重编配置，详见 [README](https://github.com/$env:GITHUB_REPOSITORY/blob/main/README.md)。不想折腾的话，用官方版登录启动、用本版下载即可，两版可共存。
+
+          ### 这是官方版吗
+          不是。基于 [Meloong-Git/PCL](https://github.com/Meloong-Git/PCL) 的 $version 源码重编，只改了三处：下载开关、两条更新日志、403 错误提示。许可见 `LICENCE`。
+
+          隐私政策：[PRIVACY.md](https://github.com/$env:GITHUB_REPOSITORY/blob/main/PRIVACY.md) ｜ 使用条款：[TERMS.md](https://github.com/$env:GITHUB_REPOSITORY/blob/main/TERMS.md)
           "@
           [IO.File]::WriteAllText("dist\RELEASE.md", $release, (New-Object Text.UTF8Encoding $false))
 
