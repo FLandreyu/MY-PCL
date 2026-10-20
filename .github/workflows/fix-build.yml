@@ -1,0 +1,111 @@
+name: Fix Build
+
+# 第三方修复版构建：推 v*-fix tag 时自动编译、打包并创建/更新 Release。
+# 也可以在 Actions 页面手动运行（只构建并上传 artifact）。
+on:
+  push:
+    tags:
+      - 'v*-fix'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore
+        run: dotnet restore PCLCS\PCLCS.csproj
+
+      - name: Build
+        shell: pwsh
+        run: |
+          msbuild "Plain Craft Launcher 2\Plain Craft Launcher 2.vbproj" -p:Configuration=Release
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "首次构建失败，尝试显式指定 .NET SDK 路径重试..."
+            $sdk = Get-ChildItem "$env:ProgramFiles\dotnet\sdk" -Directory | Sort-Object Name -Descending | Select-Object -First 1
+            $env:MSBuildSDKsPath = Join-Path $sdk.FullName 'Sdks'
+            $env:MSBuildEnableWorkloadResolver = 'false'
+            msbuild "Plain Craft Launcher 2\Plain Craft Launcher 2.vbproj" -p:Configuration=Release
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+
+      - name: Package
+        shell: pwsh
+        run: |
+          $modbase = "Plain Craft Launcher 2\Modules\Base\ModBase.vb"
+          $version = (Select-String -Path $modbase -Pattern 'VersionBaseName As String = "([\d.]+)"').Matches[0].Groups[1].Value
+          Write-Host "版本：$version"
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          Copy-Item "Plain Craft Launcher 2\bin\Plain Craft Launcher 2.exe" "dist\Plain Craft Launcher 2.exe"
+          Copy-Item "LICENCE" "dist\LICENCE"
+
+          $notes = @"
+          PCL $version 第三方修复版（恢复 MC 下载）
+
+          构建：GitHub Actions $env:GITHUB_SHA
+          来源：https://github.com/$env:GITHUB_REPOSITORY
+
+          本版改动：
+          1. RestrictMcDownload 由 True 改为 False，恢复 Minecraft 版本列表、整合包与安装页下载入口。
+          2. 移除更新日志中「删除 MC 下载功能」的提示。
+          3. 正版登录 403 时提示「应用未通过 Mojang 白名单审核」，不再误报为 IP 异常。
+
+          已知限制：
+          - 未注入官方 CI 的微软 OAuth 密钥：正版登录需自备已获 Mojang 白名单批准的 Entra 应用（环境变量 PCL_MS_CLIENT_ID）。
+          - 未注入 CurseForge API Key：CurseForge 搜索不可用。
+          - exe 未签名，Windows SmartScreen 可能提示。
+
+          许可：沿用《PCL 分发有限许可》，见 LICENCE。
+          "@
+          [IO.File]::WriteAllText("dist\修复说明.txt", $notes, (New-Object Text.UTF8Encoding $true))
+
+          Compress-Archive -Path "dist\Plain Craft Launcher 2.exe", "dist\LICENCE", "dist\修复说明.txt" `
+            -DestinationPath "dist\PCL-$version-fix-win.zip" -CompressionLevel Optimal
+
+          $release = @"
+          ## PCL $version 第三方修复版（恢复 MC 下载）
+
+          基于 [Meloong-Git/PCL](https://github.com/Meloong-Git/PCL) 的 $version 源码重新编译，**非官方发布**。
+
+          ### 改动
+          - ``RestrictMcDownload`` 改为 ``False``，恢复 Minecraft 版本列表、整合包与安装页下载入口
+          - 移除更新日志中「删除 MC 下载功能」的提示
+          - 正版登录 403 时提示「应用未通过 Mojang 白名单审核」，不再误报为 IP 异常
+
+          ### 下载
+          ``PCL-$version-fix-win.zip`` —— 内含 exe、``LICENCE``、``修复说明.txt``
+
+          ### 注意
+          - 未注入官方 CI 密钥：正版登录需自备已获 Mojang 白名单批准的 Entra 应用，详见 README
+          - exe 未签名，Windows SmartScreen 可能提示
+          "@
+          [IO.File]::WriteAllText("dist\RELEASE.md", $release, (New-Object Text.UTF8Encoding $false))
+
+          "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PCL-${{ env.VERSION }}-fix-win
+          path: dist/*.zip
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: PCL ${{ env.VERSION }} 第三方修复版（恢复 MC 下载）
+          body_path: dist/RELEASE.md
+          files: dist/*.zip
+          draft: false
+          prerelease: false

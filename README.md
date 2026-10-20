@@ -28,6 +28,23 @@
 
 > 不想折腾的话，可以直接用官方 PCL 登录并启动游戏，再用本修复版下载版本与整合包（两者数据目录互不干扰）。
 
+### 维护：同步上游
+
+上游每次发版后，用 `scripts/sync-upstream.sh` 同步并重编（Windows / Git Bash）：
+
+```bash
+# 只合并，遇到冲突会打印需要保留的点
+scripts/sync-upstream.sh
+# 合并 + 编译 + 打包 zip 到 ../dist
+scripts/sync-upstream.sh --build
+# 合并 + 编译 + 打包 + 打 tag + 更新 GitHub Release（需要 GITHUB_TOKEN）
+scripts/sync-upstream.sh --publish
+```
+
+冲突时固定保留：`RestrictMcDownload = False`、删除的两条「删除 MC 下载」更新日志、`ModLaunch.vb` 的 403 白名单判断、本 README 的「正版登录说明」。
+
+另外 `.github/workflows/fix-build.yml` 会在推送 `v*-fix` tag 时于 GitHub Actions 自动编译并创建 Release，也可以手动运行只拿 artifact。
+
 ### 相关文档
 - [隐私政策](PRIVACY.md)
 - [使用条款](TERMS.md)
