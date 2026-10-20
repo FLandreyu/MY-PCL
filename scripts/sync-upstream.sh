@@ -182,6 +182,7 @@ say "发布到 $SLUG，tag $TAG"
 
 git push "$FORK_REMOTE" main
 if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+  git tag -f -a "$TAG" -m "PCL ${VERSION} 第三方修复版（恢复 MC 下载）"
   git push "$FORK_REMOTE" "refs/tags/$TAG" --force
 else
   git tag -a "$TAG" -m "PCL ${VERSION} 第三方修复版（恢复 MC 下载）"
