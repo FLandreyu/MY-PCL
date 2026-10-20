@@ -27,7 +27,7 @@
 | Edit installed instances (add/remove loaders, update components) | ✅ |
 | Offline / third-party (authlib-injector) login | ✅ |
 | Microsoft (premium) login | ⚠️ needs your own Mojang-allowlisted Entra app, see below |
-| CurseForge online search | ❌ no CurseForge API key in this build; Modrinth search works |
+| CurseForge online search | ⚠️ needs your own API key (see [FAQ](#faq)); Modrinth needs none |
 | Auto-update | ❌ stripped from the open-source build, watch Releases instead |
 
 ## Running alongside the official launcher
@@ -52,6 +52,24 @@ Only three things; the download engine, UI and launch logic are untouched:
 - `Plain Craft Launcher 2/Modules/ModSecret.vb`: `RestrictMcDownload` flipped from `True` to `False`, restoring the download entries;
 - `Plain Craft Launcher 2/FormMain.xaml.vb`: two "download removed" changelog lines deleted;
 - `Plain Craft Launcher 2/Modules/Minecraft/ModLaunch.vb`: a 403 from the login API now distinguishes "app not allowlisted" from a real network error.
+
+## FAQ
+
+### CurseForge search returns nothing, modpack install stalls at "获取 Mod 下载信息"
+
+Check the error first. A `403` from `api.curseforge.com` with an empty body and `X-Cache: Error from cloudfront` means the request was rejected at the CDN edge — **not an API-key problem**:
+
+1. Make sure the current network can open <https://www.curseforge.com>; corporate/campus networks or ISPs may block it;
+2. If you use a proxy: CurseForge API terms §3.1(e) prohibit concealing your location through a proxy/VPN when calling the API — judge that risk yourself;
+3. Not worth the trouble? Use the Modrinth platform, which needs no key at all.
+
+### Where do I get a CurseForge API key for online search?
+
+1. Sign in to <https://console.curseforge.com> with a CurseForge account and submit the API application following the [official instructions](https://support.curseforge.com/support/solutions/articles/9000208346); review is manual and usually takes days to weeks;
+2. Once approved you get a key on the same page (60 characters, starting with `$2a$10$`);
+3. Set the environment variable `PCL_CURSEFORGE_API_KEY=<your key>`, restart PCL, and CurseForge search under *Community Resources* will work.
+
+> Keys are personal: CurseForge terms §2.2 forbid sharing, reselling, or embedding them in publicly distributed programs. This repository ships no key — please never commit one or paste it into an issue.
 
 ## License & notice
 

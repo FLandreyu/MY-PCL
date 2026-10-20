@@ -29,7 +29,7 @@
 | 修改已安装版本（增删模组加载器、更新 Forge / Fabric 等组件） | ✅ |
 | 离线登录、第三方（authlib-injector）登录 | ✅ |
 | 正版（微软）登录 | ⚠️ 需自备已获 Mojang 白名单批准的 Entra 应用，见下 |
-| CurseForge 在线搜索 | ❌ 本构建没有 CurseForge API Key；Modrinth 搜索正常 |
+| CurseForge 在线搜索 | ⚠️ 需自备 API Key（见[常见问题](#常见问题)）；Modrinth 搜索无需配置 |
 | 自动更新 | ❌ 开源版本不含更新模块，请关注 Releases |
 
 ## 和官方版共存
@@ -63,6 +63,24 @@
 - 依据《PCL 存储库合理使用指南》进行二次创作：保留关于页署名与赞助入口、沿用原许可文件 [LICENCE](LICENCE)、公开全部源代码；
 - 仅限已购买 Minecraft: Java Edition 的用户使用，请勿用于绕过正版验证、售卖或冒充官方版本；
 - 按原样提供，不对使用后果作任何担保。详见[使用条款](TERMS.md)与[隐私政策](PRIVACY.md)。
+
+## 常见问题
+
+### CurseForge 搜不出来，整合包卡在「获取 Mod 下载信息」？
+
+先看错误类型。如果请求 `api.curseforge.com` 返回 `403`、响应体为空、响应头带 `X-Cache: Error from cloudfront`，说明请求在 CDN 边缘就被拒了，**和 API Key 无关**：
+
+1. 确认当前网络能正常打开 <https://www.curseforge.com>；公司/校园网或运营商拦截时需要换网络；
+2. 使用代理时注意：CurseForge API 条款 3.1(e) 禁止用代理/VPN 掩盖地理位置访问 API，是否使用请自行权衡；
+3. 不想折腾就用 Modrinth 平台，不需要任何 Key。
+
+### 想用 CurseForge 在线搜索，Key 从哪来？
+
+1. 用 CurseForge 账号登录 <https://console.curseforge.com>，按[官方说明](https://support.curseforge.com/support/solutions/articles/9000208346)提交 API 申请，人工审核通常需要几天到数周；
+2. 通过后在同一页面获取 API Key（60 个字符，`$2a$10$` 开头）；
+3. 设置环境变量 `PCL_CURSEFORGE_API_KEY=<你的 Key>`，重新启动 PCL，即可在「社区资源」里搜索 CurseForge。
+
+> Key 只能自己用：CurseForge 条款 2.2 禁止分享、转售或内置到公开分发的程序，所以本仓库不附带 Key，也请不要把它提交到仓库或贴进 Issue。
 
 ## 反馈
 
