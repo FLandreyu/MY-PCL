@@ -27,8 +27,10 @@
 | Edit installed instances (add/remove loaders, update components) | ✅ |
 | Offline / third-party (authlib-injector) login | ✅ |
 | Microsoft (premium) login | ⚠️ needs your own Mojang-allowlisted Entra app, see below |
-| CurseForge online search | ⚠️ needs your own API key (see [FAQ](#faq)); Modrinth needs none |
+| Resource search (mods / modpacks) | ✅ **Modrinth works out of the box**, no setup; CurseForge needs your own API key (see [FAQ](#faq)) |
 | Auto-update | ❌ stripped from the open-source build, watch Releases instead |
+
+> For resource search, just use **Modrinth** — no API key, no configuration. CurseForge search is an optional extra.
 
 ## Running alongside the official launcher
 
@@ -64,6 +66,8 @@ Check the error first. A `403` from `api.curseforge.com` with an empty body and 
 3. Not worth the trouble? Use the Modrinth platform, which needs no key at all.
 
 ### Where do I get a CurseForge API key for online search?
+
+**Most users don't need one.** Search and install from Modrinth first — it needs no setup at all. The steps below are only for people who specifically want CurseForge content.
 
 1. Sign in to <https://console.curseforge.com> with a CurseForge account and submit the API application following the [official instructions](https://support.curseforge.com/support/solutions/articles/9000208346); review is manual and usually takes days to weeks;
 2. Once approved you get a key on the same page (60 characters, starting with `$2a$10$`);

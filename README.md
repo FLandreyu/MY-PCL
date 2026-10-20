@@ -29,8 +29,10 @@
 | 修改已安装版本（增删模组加载器、更新 Forge / Fabric 等组件） | ✅ |
 | 离线登录、第三方（authlib-injector）登录 | ✅ |
 | 正版（微软）登录 | ⚠️ 需自备已获 Mojang 白名单批准的 Entra 应用，见下 |
-| CurseForge 在线搜索 | ⚠️ 需自备 API Key（见[常见问题](#常见问题)）；Modrinth 搜索无需配置 |
+| 资源搜索（模组 / 整合包） | ✅ **Modrinth 开箱即用**，零配置；CurseForge 需自备 API Key（见[常见问题](#常见问题)） |
 | 自动更新 | ❌ 开源版本不含更新模块，请关注 Releases |
+
+> 资源搜索推荐直接用 **Modrinth**：不需要 API Key、不需要任何配置，下载完就能用。CurseForge 搜索属于可选增强。
 
 ## 和官方版共存
 
@@ -76,11 +78,15 @@
 
 ### 想用 CurseForge 在线搜索，Key 从哪来？
 
+**大多数用户不需要这个 Key。** 搜模组、装整合包优先用 Modrinth，完全零配置；下面步骤只给确实需要 CurseForge 内容索引的人。
+
 1. 用 CurseForge 账号登录 <https://console.curseforge.com>，按[官方说明](https://support.curseforge.com/support/solutions/articles/9000208346)提交 API 申请，人工审核通常需要几天到数周；
 2. 通过后在同一页面获取 API Key（60 个字符，`$2a$10$` 开头）；
 3. 设置环境变量 `PCL_CURSEFORGE_API_KEY=<你的 Key>`，重新启动 PCL，即可在「社区资源」里搜索 CurseForge。
 
 > Key 只能自己用：CurseForge 条款 2.2 禁止分享、转售或内置到公开分发的程序，所以本仓库不附带 Key，也请不要把它提交到仓库或贴进 Issue。
+>
+> 为什么不能直接内置、以及申请「公开版内置 Key」书面许可的做法，见 [docs/overwolf-api-license-request.md](docs/overwolf-api-license-request.md)。
 
 ## 反馈
 

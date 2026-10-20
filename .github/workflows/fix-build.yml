@@ -63,7 +63,7 @@ jobs:
 
           已知限制：
           - 未注入官方 CI 的微软 OAuth 密钥：正版登录需自备已获 Mojang 白名单批准的 Entra 应用（环境变量 PCL_MS_CLIENT_ID）。
-          - 未注入 CurseForge API Key：CurseForge 搜索不可用。
+          - 未注入 CurseForge API Key：CurseForge 搜索需自备 Key，Modrinth 开箱即用。
           - exe 未签名，Windows SmartScreen 可能提示。
 
           许可：沿用《PCL 分发有限许可》，见 LICENCE。
@@ -95,8 +95,10 @@ jobs:
           | 安装整合包（.zip / .mrpack） | ✅ |
           | 修改已安装版本组件 | ✅ |
           | 正版（微软）登录 | ⚠️ 需自备已获 Mojang 白名单批准的 Entra 应用 |
-          | CurseForge 在线搜索 | ❌ 本构建无 API Key（Modrinth 正常） |
+          | 资源搜索（模组 / 整合包） | ✅ **Modrinth 开箱即用**，零配置；CurseForge 需自备 API Key（见文末） |
           | 自动更新 | ❌ 开源版不含更新模块 |
+
+          > 日常搜索用 Modrinth 就够了：不需要任何配置，下载完就能搜、能装。
 
           ### 正版登录怎么办
           本版不含微软 OAuth 客户端 ID，需要自备已获 Mojang 白名单批准的 Entra 应用，再通过 `PCL_MS_CLIENT_ID` 或自行重编配置，详见 [README](https://github.com/$env:GITHUB_REPOSITORY/blob/main/README.md)。不想折腾的话，用官方版登录启动、用本版下载即可，两版可共存。
@@ -105,6 +107,8 @@ jobs:
           不是。基于 [Meloong-Git/PCL](https://github.com/Meloong-Git/PCL) 的 $version 源码重编，只改了三处：下载开关、两条更新日志、403 错误提示。许可见 `LICENCE`。
 
           隐私政策：[PRIVACY.md](https://github.com/$env:GITHUB_REPOSITORY/blob/main/PRIVACY.md) ｜ 使用条款：[TERMS.md](https://github.com/$env:GITHUB_REPOSITORY/blob/main/TERMS.md)
+
+          关于为什么本版本不直接内置 CurseForge Key，以及向 Overwolf 申请书面许可的草稿：[docs/overwolf-api-license-request.md](https://github.com/$env:GITHUB_REPOSITORY/blob/main/docs/overwolf-api-license-request.md)。
           "@
           [IO.File]::WriteAllText("dist\RELEASE.md", $release, (New-Object Text.UTF8Encoding $false))
 
