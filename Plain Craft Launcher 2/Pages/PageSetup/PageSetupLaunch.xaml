@@ -11,7 +11,7 @@
                 <StackPanel Margin="25,40,25,25">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition Width="Auto" MinWidth="112" SharedSizeGroup="Name" />
                             <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="60" />
                         </Grid.ColumnDefinitions>
@@ -192,7 +192,7 @@
                     </Grid>
                     <Grid x:Name="PanSkinID" Margin="0,14,0,2" Visibility="Collapsed">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition Width="Auto" MinWidth="112" SharedSizeGroup="Name" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>

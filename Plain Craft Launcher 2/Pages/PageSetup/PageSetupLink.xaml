@@ -10,7 +10,7 @@
                 <StackPanel Margin="25,40,25,20">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition Width="Auto" MinWidth="112" SharedSizeGroup="Name" />
                             <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="60" />
                         </Grid.ColumnDefinitions>

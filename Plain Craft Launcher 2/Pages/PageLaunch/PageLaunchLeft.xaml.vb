@@ -684,6 +684,12 @@ Finish:
                 'FrmLaunchLeft.BtnMore.Visibility = Visibility.Visible '由功能隐藏设置修改
         End Select
 ExitRefresh:
+        '副标题颜色随按钮状态变化
+        If FrmLaunchLeft.BtnLaunch.IsEnabled Then
+            FrmLaunchLeft.LabVersion.Foreground = New MyColor(235, 255, 255, 255)
+        Else
+            FrmLaunchLeft.LabVersion.SetResourceReference(TextBlock.ForegroundProperty, "ColorBrushGray3")
+        End If
         '功能隐藏
         FrmLaunchLeft.BtnVersion.Visibility = If(Not PageSetupUI.HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenFunctionSelect"), Visibility.Collapsed, Visibility.Visible)
         If CurrentState = 3 Then

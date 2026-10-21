@@ -69,15 +69,15 @@ Public Class MyComboBox
         If IsEnabled Then
             If IsMouseDown OrElse IsDropDownOpen OrElse (IsEditable AndAlso Template.FindName("PART_EditableTextBox", Me).IsFocused) Then
                 ForeColorName = "ColorBrush3"
-                BackColorName = "ColorBrush7"
+                BackColorName = "ColorBrushSurface"
                 Time = 10
             ElseIf IsMouseOver Then
-                ForeColorName = "ColorBrush4"
-                BackColorName = "ColorBrush7"
+                ForeColorName = "ColorBrush5"
+                BackColorName = "ColorBrushSurfaceSoft"
                 Time = 100
             Else
-                ForeColorName = "ColorBrushBg0"
-                BackColorName = "ColorBrushHalfWhite"
+                ForeColorName = "ColorBrushSoftBorder"
+                BackColorName = "ColorBrushSurface"
                 Time = 100
             End If
         Else

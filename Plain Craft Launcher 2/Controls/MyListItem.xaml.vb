@@ -18,16 +18,17 @@ Public Class MyListItem
             If _RectBack Is Nothing Then
                 Dim Rect As New Border With {
                     .Name = "RectBack",
-                    .CornerRadius = New CornerRadius(If(IsScaleAnimationEnabled OrElse Height > 40, 6, 0)),
+                    .CornerRadius = New CornerRadius(6),
+                    .Margin = New Thickness(3, 2, 3, 2),
                     .RenderTransform = If(IsScaleAnimationEnabled, New ScaleTransform(0.8, 0.8), Nothing),
                     .RenderTransformOrigin = New Point(0.5, 0.5),
-                    .BorderThickness = New Thickness(GetWPFSize(1)),
+                    .BorderThickness = New Thickness(0),
                     .SnapsToDevicePixels = True,
                     .IsHitTestVisible = False,
                     .Opacity = 0
                 }
-                Rect.SetResourceReference(Border.BackgroundProperty, "ColorBrush7")
-                Rect.SetResourceReference(Border.BorderBrushProperty, "ColorBrush6")
+                Rect.SetResourceReference(Border.BackgroundProperty, "ColorBrushHoverFill")
+                Rect.SetResourceReference(Border.BorderBrushProperty, "ColorBrushAccentBorder")
                 SetColumnSpan(Rect, 999)
                 SetRowSpan(Rect, 999)
                 Children.Insert(0, Rect)
@@ -93,7 +94,7 @@ Public Class MyListItem
         End Get
         Set
             _IsScaleAnimationEnabled = Value
-            If _RectBack IsNot Nothing Then RectBack.CornerRadius = New CornerRadius(If(Value, 6, 0))
+            If _RectBack IsNot Nothing Then RectBack.CornerRadius = New CornerRadius(6)
         End Set
     End Property
     Private _IsScaleAnimationEnabled As Boolean = True
@@ -309,6 +310,12 @@ Public Class MyListItem
                     RectCheck = Nothing
                 End If
                 SetChecked(False, False, False)
+            ElseIf _Type = CheckType.RadioBox Then
+                '单选列表项使用圆角胶囊高亮表示选中，不显示左侧竖条
+                If Not IsNothing(RectCheck) Then
+                    Children.Remove(RectCheck)
+                    RectCheck = Nothing
+                End If
             Else
                 '添加竖条控件
                 If IsNothing(RectCheck) Then
@@ -446,6 +453,11 @@ Public Class MyListItem
                         RectCheck.Margin = New Thickness(-1, 0, 0, 0)
                     End If
                     Anim.Add(AaColor(Me, ForegroundProperty, If(Height < 40, "ColorBrush3", "ColorBrush2"), 200))
+                    If Type = CheckType.RadioBox Then
+                        Anim.Add(AaColor(RectBack, Border.BackgroundProperty, "ColorBrush6", 200))
+                        Anim.Add(AaColor(RectBack, Border.BorderBrushProperty, "ColorBrushAccentBorder", 200))
+                        Anim.Add(AaOpacity(RectBack, 1 - RectBack.Opacity, 200))
+                    End If
                 Else
                     '由有变无
                     If Not IsNothing(RectCheck) Then
@@ -455,6 +467,9 @@ Public Class MyListItem
                         RectCheck.VerticalAlignment = VerticalAlignment.Center
                     End If
                     Anim.Add(AaColor(Me, ForegroundProperty, "ColorBrush1", 120))
+                    If Type = CheckType.RadioBox AndAlso Not (IsMouseOver AndAlso IsMouseOverAnimationEnabled) Then
+                        Anim.Add(AaOpacity(RectBack, -RectBack.Opacity, 160))
+                    End If
                 End If
                 AniStart(Anim, "MyListItem Checked " & Uuid)
             Else
@@ -468,6 +483,11 @@ Public Class MyListItem
                         RectCheck.VerticalAlignment = VerticalAlignment.Stretch
                     End If
                     SetResourceReference(ForegroundProperty, If(Height < 40, "ColorBrush3", "ColorBrush2"))
+                    If Type = CheckType.RadioBox Then
+                        RectBack.SetResourceReference(Border.BackgroundProperty, "ColorBrush6")
+                        RectBack.SetResourceReference(Border.BorderBrushProperty, "ColorBrushAccentBorder")
+                        RectBack.Opacity = 1
+                    End If
                 Else
                     If Not IsNothing(RectCheck) Then
                         RectCheck.Height = 0
@@ -476,6 +496,7 @@ Public Class MyListItem
                         RectCheck.VerticalAlignment = VerticalAlignment.Center
                     End If
                     SetResourceReference(ForegroundProperty, "ColorBrush1")
+                    If Type = CheckType.RadioBox AndAlso Not (IsMouseOver AndAlso IsMouseOverAnimationEnabled) Then RectBack.Opacity = 0
                 End If
             End If
 
@@ -577,7 +598,8 @@ Public Class MyListItem
                                      Math.Max(MinPaddingRight, 5 + Buttons.Count * 25) - ColumnPaddingRight.Width.Value, Time * 0.3, Time * 0.7))
                 End If
                 Ani.AddRange({
-                             AaColor(RectBack, Border.BackgroundProperty, If(IsMouseDown, "ColorBrush6", "ColorBrushBg1"), Time),
+                             AaColor(RectBack, Border.BackgroundProperty, If(IsMouseDown, "ColorBrushAccentSoft", "ColorBrushHoverFill"), Time),
+                             AaColor(RectBack, Border.BorderBrushProperty, "ColorBrushAccentBorder", Time),
                              AaOpacity(RectBack, 1 - RectBack.Opacity, Time,, New AniEaseOutFluent)
                          })
                 If IsScaleAnimationEnabled Then
@@ -594,7 +616,15 @@ Public Class MyListItem
                     Ani.Add(AaDouble(Sub(i) ColumnPaddingRight.Width = New GridLength(Math.Max(0, ColumnPaddingRight.Width.Value + i)),
                                      MinPaddingRight - ColumnPaddingRight.Width.Value, Time * 0.4))
                 End If
-                Ani.Add(AaOpacity(RectBack, -RectBack.Opacity, Time))
+                If Type = CheckType.RadioBox AndAlso Checked Then
+                    Ani.AddRange({
+                        AaColor(RectBack, Border.BackgroundProperty, "ColorBrush6", Time),
+                        AaColor(RectBack, Border.BorderBrushProperty, "ColorBrushAccentBorder", Time),
+                        AaOpacity(RectBack, 1 - RectBack.Opacity, Time,, New AniEaseOutFluent)
+                    })
+                Else
+                    Ani.Add(AaOpacity(RectBack, -RectBack.Opacity, Time))
+                End If
                 If IsScaleAnimationEnabled Then
                     Ani.AddRange({
                         AaColor(RectBack, Border.BackgroundProperty, If(IsMouseDown, "ColorBrush6", "ColorBrush7"), Time),
@@ -625,8 +655,14 @@ Public Class MyListItem
                 Me.RenderTransform = New ScaleTransform(1, 1)
                 If _RectBack IsNot Nothing Then
                     If IsScaleAnimationEnabled Then RectBack.RenderTransform = New ScaleTransform(0.75, 0.75)
-                    RectBack.Background = Color7
-                    RectBack.Opacity = 0
+                    If Type = CheckType.RadioBox AndAlso Checked Then
+                        RectBack.SetResourceReference(Border.BackgroundProperty, "ColorBrush6")
+                        RectBack.SetResourceReference(Border.BorderBrushProperty, "ColorBrushAccentBorder")
+                        RectBack.Opacity = 1
+                    Else
+                        RectBack.SetResourceReference(Border.BackgroundProperty, "ColorBrushHoverFill")
+                        RectBack.Opacity = 0
+                    End If
                 End If
             End If
             AniStop("ListItem Color " & Uuid)

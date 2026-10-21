@@ -64,10 +64,11 @@ Public Class MyCard
     'UI 建立
     Public Sub New()
         MainChrome = New MyDropShadow With {
-            .Margin = New Thickness(-3, -3, -3, -3 - GetWPFSize(1)), .ShadowRadius = 3, .Opacity = DropShadowIdleOpacity, .CornerRadius = New CornerRadius(5)}
+            .Margin = New Thickness(-7, -7, -7, -7 - GetWPFSize(1)), .ShadowRadius = 6, .Opacity = DropShadowIdleOpacity, .CornerRadius = New CornerRadius(8)}
         MainChrome.SetResourceReference(MyDropShadow.ColorProperty, "ColorObject1")
         Children.Insert(0, MainChrome)
-        MainBorder = New Border With {.Background = New SolidColorBrush(Color.FromArgb(245, 255, 255, 255)), .CornerRadius = New CornerRadius(5), .IsHitTestVisible = False}
+        MainBorder = New Border With {.Background = New SolidColorBrush(Color.FromArgb(250, 255, 255, 255)), .CornerRadius = New CornerRadius(8), .IsHitTestVisible = False, .BorderThickness = New Thickness(1)}
+        MainBorder.SetResourceReference(Border.BorderBrushProperty, "ColorBrushCardBorder")
         Children.Insert(1, MainBorder)
         MainGrid = New Grid
         Children.Add(MainGrid)
@@ -135,7 +136,7 @@ Public Class MyCard
     End Sub
 
     '动画
-    Private Const DropShadowIdleOpacity As Double = 0.07
+    Private Const DropShadowIdleOpacity As Double = 0.10
     Private Const DropShadowHoverOpacity As Double = 0.4
     Public Property HasMouseAnimation As Boolean = True
     Private Sub MyCard_MouseEnter(sender As Object, e As MouseEventArgs) Handles Me.MouseEnter

@@ -28,9 +28,9 @@ Public Class MyMsgSelect
                 AddHandler Selection.Check, AddressOf OnChecked
                 If TypeOf Selection Is MyListItem Then
                     CType(Selection, MyListItem).Type = MyListItem.CheckType.RadioBox
-                    CType(Selection, MyListItem).MinHeight = 24
+                    CType(Selection, MyListItem).MinHeight = 30
                 Else
-                    CType(Selection, MyRadioBox).MinHeight = 24
+                    CType(Selection, MyRadioBox).MinHeight = 30
                 End If
             Next
 

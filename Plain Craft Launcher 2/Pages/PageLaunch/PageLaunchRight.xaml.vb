@@ -10,6 +10,9 @@ Public Class PageLaunchRight
         PanHint.Visibility =
             (BuildType <> BuildTypes.Release AndAlso VersionBranchMain = "Official" AndAlso
              CurrentRank < DonationRank.Rank23 AndAlso Not Settings.Get(Of Boolean)("HintSnapshot")).ToVisibility
+        AddHandler BtnWelcomeDownload.Click, Sub(sender, e) FrmMain.PageChange(FormMain.PageType.Download, FormMain.PageSubType.DownloadInstall)
+        AddHandler BtnWelcomePack.Click, Sub(sender, e) FrmMain.PageChange(FormMain.PageType.Download, FormMain.PageSubType.DownloadPack)
+        AddHandler BtnWelcomeSetup.Click, Sub(sender, e) FrmMain.PageChange(FormMain.PageType.Setup)
     End Sub
 
 #Region "主页"
@@ -242,6 +245,7 @@ Public Class PageLaunchRight
                 PanCustom.Children.Clear()
                 If String.IsNullOrWhiteSpace(Content) Then
                     Logger.Info($"实例化：清空主页 UI，来源为空")
+                    PanWelcome.Visibility = Visibility.Visible
                     Return
                 End If
                 Dim LoadStartTime As Date = Date.Now
@@ -253,6 +257,7 @@ Public Class PageLaunchRight
                 Content = "<StackPanel xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" xmlns:sys=""clr-namespace:System;assembly=mscorlib"" xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"" xmlns:local=""clr-namespace:PCL;assembly=Plain Craft Launcher 2"" xmlns:core=""clr-namespace:MeloongCore;assembly=MeloongCore"" xmlns:corewpf=""clr-namespace:MeloongCore.Wpf;assembly=MeloongCore.Wpf"">" & Content & "</StackPanel>"
                 Logger.Info($"实例化：加载主页 UI 开始，最终内容长度：{Content.Count}")
                 PanCustom.Children.Add(GetObjectFromXML(Content))
+                PanWelcome.Visibility = Visibility.Collapsed
                 '加载计时
                 Dim LoadCostTime = (Date.Now - LoadStartTime).Milliseconds
                 Logger.Info($"实例化：加载主页 UI 完成，耗时 {LoadCostTime}ms")

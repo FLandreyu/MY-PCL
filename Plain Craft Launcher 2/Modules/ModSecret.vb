@@ -114,9 +114,10 @@ Friend Module ModSecret
             '顶部条背景
             Dim Brush = New LinearGradientBrush With {.EndPoint = New Point(1, 0), .StartPoint = New Point(0, 0)}
             Dim Deltas = ColorHueTopbarDelta.Switch(Function(d) New Integer() {-d, 0, d}, Function(d) d)
-            Brush.GradientStops.Add(New GradientStop With {.Offset = 0, .Color = New MyColor().FromHSL2(ColorHue + Deltas(0), ColorSat, 48 + ColorLightAdjust)})
-            Brush.GradientStops.Add(New GradientStop With {.Offset = 0.5, .Color = New MyColor().FromHSL2(ColorHue + Deltas(1), ColorSat, 54 + ColorLightAdjust)})
-            Brush.GradientStops.Add(New GradientStop With {.Offset = 1, .Color = New MyColor().FromHSL2(ColorHue + Deltas(2), ColorSat, 48 + ColorLightAdjust)})
+            Brush.GradientStops.Add(New GradientStop With {.Offset = -0.05, .Color = New MyColor().FromHSL2(ColorHue + Deltas(0), ColorSat * 0.98, 44 + ColorLightAdjust)})
+            Brush.GradientStops.Add(New GradientStop With {.Offset = 0.32, .Color = New MyColor().FromHSL2(ColorHue + Deltas(1), ColorSat, 53 + ColorLightAdjust)})
+            Brush.GradientStops.Add(New GradientStop With {.Offset = 0.72, .Color = New MyColor().FromHSL2(ColorHue + Deltas(2), ColorSat, 49 + ColorLightAdjust)})
+            Brush.GradientStops.Add(New GradientStop With {.Offset = 1.05, .Color = New MyColor().FromHSL2(ColorHue + Deltas(2), ColorSat * 0.95, 42 + ColorLightAdjust)})
             FrmMain.PanTitle.Background = Brush
             FrmMain.PanTitle.Background.Freeze()
             '主页面背景
