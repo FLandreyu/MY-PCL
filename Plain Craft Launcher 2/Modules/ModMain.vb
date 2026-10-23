@@ -56,8 +56,9 @@ Public Module ModMain
                 Dim Percent As Double = 0.3
                 Select Case CurrentHint.Type
                     Case HintType.Blue
-                        TargetColor0 = New MyColor(215, 37, 155, 252)
-                        TargetColor1 = New MyColor(215, 10, 142, 252)
+                        ' 芙兰朵露主题：普通提示使用绯红渐变
+                        TargetColor0 = New MyColor(215, 230, 31, 48)
+                        TargetColor1 = New MyColor(215, 184, 20, 34)
                     Case HintType.Green
                         TargetColor0 = New MyColor(215, 33, 177, 33)
                         TargetColor1 = New MyColor(215, 29, 160, 29)

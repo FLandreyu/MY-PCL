@@ -8,7 +8,7 @@
              FocusVisualStyle="{x:Null}"
              MinHeight="16" UseLayoutRounding="False" SnapsToDevicePixels="False" BorderBrush="{DynamicResource ColorBrushBg0}" Name="PanBack" Background="{StaticResource ColorBrushSemiTransparent}" Focusable="True">
     <Grid x:Name="PanMain" MinHeight="16" MaxHeight="16" IsHitTestVisible="False">
-        <Line Height="6" Name="LineBack" Stroke="{DynamicResource ColorBrushBg0}" Opacity="0.42" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round" X2="10000" Y1="3" Y2="3" HorizontalAlignment="Right" Width="0" SnapsToDevicePixels="True" Margin="0,0,1,0" />
+        <Line Height="6" Name="LineBack" Stroke="{Binding ElementName=PanBack, Path=BorderBrush}" Opacity="0.42" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round" X2="10000" Y1="3" Y2="3" HorizontalAlignment="Right" Width="0" SnapsToDevicePixels="True" Margin="0,0,1,0" />
         <Line Height="6" Name="LineFore" Stroke="{Binding ElementName=PanBack, Path=BorderBrush}" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round" X2="10000" Y1="3" Y2="3" Width="0" HorizontalAlignment="Left" SnapsToDevicePixels="True" Margin="1,0,0,0" />
         <Ellipse HorizontalAlignment="Left" Width="15" Height="15" 
                  Stroke="{Binding BorderBrush, ElementName=PanBack}" StrokeThickness="2.4" 

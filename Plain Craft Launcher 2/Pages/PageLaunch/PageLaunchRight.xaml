@@ -17,26 +17,55 @@
                     </RadialGradientBrush>
                 </Ellipse.Fill>
             </Ellipse>
-            <TextBlock Text="PCL" FontSize="230" FontWeight="Bold" Opacity="0.34" Canvas.Right="-36" Canvas.Bottom="-70"
-                       Foreground="#26FFFFFF" FontFamily="Resources/#PCL English, Microsoft YaHei UI" />
+            <TextBlock Text="PCL" FontSize="230" FontWeight="Bold" Opacity="0.45" Canvas.Right="-36" Canvas.Bottom="-70"
+                       Foreground="#33C81E2E" FontFamily="Resources/#PCL English, Microsoft YaHei UI" />
         </Canvas>
         <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
             <StackPanel Name="PanMain" Margin="25,25,25,10" Grid.IsSharedSizeScope="True">
                 <local:MyHint x:Name="PanHint" RelativeSetup="HintSnapshot" Theme="Blue" CanClose="True" Margin="0,0,0,15"
                               Text="快照版 PCL 包含尚未正式发布的测试功能，仅限赞助者自己使用。&#xa;请不要随意发给其他人，或是用来制作整合包哦！" />
                 <local:MyCard Margin="0,0,0,15" x:Name="PanWelcome" Title="快速开始">
-                    <StackPanel Margin="18,36,18,18">
-                        <TextBlock x:Name="LabWelcomeText" Text="欢迎使用 PCL" FontSize="20" FontWeight="Bold"
-                                   Foreground="{DynamicResource ColorBrush2}" />
-                        <TextBlock x:Name="LabWelcomeSub" Margin="0,9,0,0" FontSize="12.5" TextWrapping="Wrap"
-                                   Foreground="{DynamicResource ColorBrushTextSecondary}"
-                                   Text="还没有可以启动的游戏？先在这里下载一个 Minecraft，或者前往设置把启动器调成你喜欢的样子。" />
-                        <StackPanel Orientation="Horizontal" Margin="0,18,0,0">
-                            <local:MyButton x:Name="BtnWelcomeDownload" Text="下载游戏" Height="36" MinWidth="116" Padding="18,0" Margin="0,0,10,0" ColorType="Highlight" />
-                            <local:MyButton x:Name="BtnWelcomePack" Text="安装整合包" Height="36" MinWidth="116" Padding="18,0" Margin="0,0,10,0" />
-                            <local:MyButton x:Name="BtnWelcomeSetup" Text="打开设置" Height="36" MinWidth="104" Padding="18,0" />
+                    <Grid Margin="18,34,18,18">
+                        <StackPanel>
+                            <TextBlock x:Name="LabWelcomeText" Text="欢迎使用 PCL" FontSize="20" FontWeight="Bold"
+                                       Foreground="{DynamicResource ColorBrush2}" />
+                            <TextBlock x:Name="LabWelcomeSub" Margin="0,9,0,0" FontSize="12.5" TextWrapping="Wrap"
+                                       Foreground="{DynamicResource ColorBrushTextSecondary}"
+                                       Text="还没有可以启动的游戏？先在这里下载一个 Minecraft，或者前往设置把启动器调成你喜欢的样子。" />
+                            <!-- 芙兰印记：金色星线与英文名 -->
+                            <StackPanel Orientation="Horizontal" Margin="0,13,0,0" IsHitTestVisible="False">
+                                <Rectangle Width="22" Height="1" VerticalAlignment="Center" Fill="{StaticResource ColorBrushGoldBorder}" />
+                                <Path Width="9" Height="9" Margin="7,0" Stretch="Fill" VerticalAlignment="Center" Fill="{StaticResource ColorBrushGold}"
+                                      Data="M 0,-6 L 1.8,-1.8 L 6,0 L 1.8,1.8 L 0,6 L -1.8,1.8 L -6,0 L -1.8,-1.8 Z" />
+                                <TextBlock Text="F L A N D R E   S C A R L E T" FontSize="8.5" VerticalAlignment="Center"
+                                           Foreground="{StaticResource ColorBrushGold}" Opacity="0.9" />
+                                <Rectangle Width="22" Height="1" Margin="7,0,0,0" VerticalAlignment="Center" Fill="{StaticResource ColorBrushGoldBorder}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,17,0,0">
+                                <local:MyButton x:Name="BtnWelcomeDownload" Text="下载游戏" Height="36" MinWidth="116" Padding="18,0" Margin="0,0,10,0" ColorType="Highlight" />
+                                <local:MyButton x:Name="BtnWelcomePack" Text="安装整合包" Height="36" MinWidth="116" Padding="18,0" Margin="0,0,10,0" />
+                                <local:MyButton x:Name="BtnWelcomeSetup" Text="打开设置" Height="36" MinWidth="104" Padding="18,0" />
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
+                        <!-- 水晶翼：芙兰朵露背后的七色水晶，尺寸由中间向两侧递减 -->
+                        <Canvas Width="96" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-7,0,0"
+                                Opacity="0.9" IsHitTestVisible="False">
+                            <Path Canvas.Left="0" Canvas.Top="11" Width="6" Height="10" Stretch="Fill" Fill="{StaticResource ColorBrushCrystal1}"
+                                  Data="M 0,-6 L 4,0 L 0,6 L -4,0 Z" />
+                            <Path Canvas.Left="12" Canvas.Top="7" Width="7" Height="12" Stretch="Fill" Fill="{StaticResource ColorBrushCrystal2}"
+                                  Data="M 0,-6 L 4,0 L 0,6 L -4,0 Z" />
+                            <Path Canvas.Left="25" Canvas.Top="4" Width="8" Height="14" Stretch="Fill" Fill="{StaticResource ColorBrushCrystal3}"
+                                  Data="M 0,-6 L 4,0 L 0,6 L -4,0 Z" />
+                            <Path Canvas.Left="39" Canvas.Top="2" Width="9" Height="16" Stretch="Fill" Fill="{StaticResource ColorBrushCrystal4}"
+                                  Data="M 0,-6 L 4,0 L 0,6 L -4,0 Z" />
+                            <Path Canvas.Left="54" Canvas.Top="4" Width="8" Height="14" Stretch="Fill" Fill="{StaticResource ColorBrushCrystal5}"
+                                  Data="M 0,-6 L 4,0 L 0,6 L -4,0 Z" />
+                            <Path Canvas.Left="68" Canvas.Top="7" Width="7" Height="12" Stretch="Fill" Fill="{StaticResource ColorBrushCrystal6}"
+                                  Data="M 0,-6 L 4,0 L 0,6 L -4,0 Z" />
+                            <Path Canvas.Left="81" Canvas.Top="11" Width="6" Height="10" Stretch="Fill" Fill="{StaticResource ColorBrushCrystal7}"
+                                  Data="M 0,-6 L 4,0 L 0,6 L -4,0 Z" />
+                        </Canvas>
+                    </Grid>
                 </local:MyCard>
                 <StackPanel x:Name="PanCustom">
                 </StackPanel>

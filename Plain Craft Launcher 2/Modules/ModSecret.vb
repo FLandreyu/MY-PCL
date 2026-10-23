@@ -41,15 +41,15 @@ Friend Module ModSecret
 
 #Region "主题"
 
-    Public Color1 As New MyColor(52, 61, 74)
-    Public Color2 As New MyColor(11, 91, 203)
-    Public Color3 As New MyColor(19, 112, 243)
-    Public Color4 As New MyColor(72, 144, 245)
-    Public Color5 As New MyColor(150, 192, 249)
-    Public Color6 As New MyColor(213, 230, 253)
-    Public Color7 As New MyColor(222, 236, 253)
-    Public Color8 As New MyColor(234, 242, 254)
-    Public ColorBg0 As New MyColor(150, 192, 249)
+    Public Color1 As New MyColor(67, 48, 50)
+    Public Color2 As New MyColor(184, 20, 34)
+    Public Color3 As New MyColor(230, 31, 48)
+    Public Color4 As New MyColor(235, 72, 85)
+    Public Color5 As New MyColor(244, 157, 165)
+    Public Color6 As New MyColor(250, 214, 217)
+    Public Color7 As New MyColor(253, 235, 236)
+    Public Color8 As New MyColor(254, 243, 244)
+    Public ColorBg0 As New MyColor(225, 125, 133)
     Public ColorBg1 As New MyColor(190, Color7)
     Public ColorGray1 As New MyColor(64, 64, 64)
     Public ColorGray2 As New MyColor(115, 115, 115)
@@ -62,7 +62,8 @@ Friend Module ModSecret
     Public ColorSemiTransparent As New MyColor(1, Color8)
 
     Public ThemeNow As Integer = -1
-    Public ColorHue As Integer = 210, ColorSat As Integer = 85, ColorLightAdjust As Integer = 0, ColorHueTopbarDelta As OneOf(Of Integer, Integer()) = 0
+    ' 芙兰朵露主题：绯红主色 + 顶部条由玫瑰红向猩红偏移
+    Public ColorHue As Integer = 355, ColorSat As Integer = 80, ColorLightAdjust As Integer = -10, ColorHueTopbarDelta As OneOf(Of Integer, Integer()) = New Integer() {-12, 0, 8}
     Public ThemeDontClick As Integer = 0
 
     Public Sub ThemeRefresh(Optional NewTheme As Integer = -1)
