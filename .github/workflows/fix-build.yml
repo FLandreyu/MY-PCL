@@ -68,9 +68,10 @@ jobs:
 
           许可：沿用《PCL 分发有限许可》，见 LICENCE。
           "@
-          [IO.File]::WriteAllText("dist\修复说明.txt", $notes, (New-Object Text.UTF8Encoding $true))
+          # 说明文件名必须用 ASCII：PS 5.1 的 Compress-Archive 会把中文名打成乱码
+          [IO.File]::WriteAllText("dist\README.txt", $notes, (New-Object Text.UTF8Encoding $true))
 
-          Compress-Archive -Path "dist\Plain Craft Launcher 2.exe", "dist\LICENCE", "dist\修复说明.txt" `
+          Compress-Archive -Path "dist\Plain Craft Launcher 2.exe", "dist\LICENCE", "dist\README.txt" `
             -DestinationPath "dist\PCL-$version-fix-win.zip" -CompressionLevel Optimal
 
           $release = @"
@@ -104,7 +105,7 @@ jobs:
           本版不含微软 OAuth 客户端 ID，需要自备已获 Mojang 白名单批准的 Entra 应用，再通过 `PCL_MS_CLIENT_ID` 或自行重编配置，详见 [README](https://github.com/$env:GITHUB_REPOSITORY/blob/main/README.md)。不想折腾的话，用官方版登录启动、用本版下载即可，两版可共存。
 
           ### 这是官方版吗
-          不是。基于 [Meloong-Git/PCL](https://github.com/Meloong-Git/PCL) 的 $version 源码重编，只改了三处：下载开关、两条更新日志、403 错误提示。许可见 `LICENCE`。
+          不是。基于 [Meloong-Git/PCL](https://github.com/Meloong-Git/PCL) 的 $version 源码重编，改动见仓库提交记录。许可见 `LICENCE`。
 
           隐私政策：[PRIVACY.md](https://github.com/$env:GITHUB_REPOSITORY/blob/main/PRIVACY.md) ｜ 使用条款：[TERMS.md](https://github.com/$env:GITHUB_REPOSITORY/blob/main/TERMS.md)
 
